@@ -1,0 +1,61 @@
+.root {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Wider than the section so it can drift sideways without showing an edge. */
+.bands {
+  position: absolute;
+  inset: 0 -240px;
+  /* Two band patterns with different spacing overlap, so the streaks never look regular. */
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgb(0 0 0 / 0) 0,
+      rgb(0 0 0 / var(--a1)) 34px,
+      rgb(0 0 0 / 0) 70px,
+      rgb(0 0 0 / var(--a2)) 118px,
+      rgb(0 0 0 / 0) 150px,
+      rgb(0 0 0 / var(--a1)) 196px,
+      rgb(0 0 0 / 0) 240px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgb(0 0 0 / 0) 0,
+      rgb(0 0 0 / var(--a1)) 52px,
+      rgb(0 0 0 / 0) 96px,
+      rgb(0 0 0 / 0) 210px,
+      rgb(0 0 0 / var(--a2)) 260px,
+      rgb(0 0 0 / 0) 370px
+    );
+  filter: blur(12px);
+  will-change: transform;
+  animation: drift 36s ease-in-out infinite alternate;
+}
+
+.soft {
+  --a1: 0.05;
+  --a2: 0.08;
+}
+
+.deep {
+  --a1: 0.09;
+  --a2: 0.14;
+}
+
+.fade {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(50% 50% at 50% 50%, rgb(255 255 255 / 0) var(--clear), var(--white) 100%);
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(-120px);
+  }
+  to {
+    transform: translateX(120px);
+  }
+}

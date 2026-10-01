@@ -1,0 +1,9 @@
+/* The original keeps 128px side padding on dividers at every width. */
+.divider {
+  padding: var(--divider-space) var(--space-128);
+}
+
+.line {
+  height: 1px;
+  background: linear-gradient(90deg, var(--white) 0%, var(--color-hairline) 50%, var(--white) 100%);
+}
