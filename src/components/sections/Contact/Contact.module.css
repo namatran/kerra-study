@@ -1,0 +1,183 @@
+.contact {
+  position: relative;
+  padding-block: var(--space-128);
+}
+
+/* The streaks run a little past the section's bottom edge, as in the original. */
+.background {
+  position: absolute;
+  inset: 0 0 -48px;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-96);
+}
+
+/* Heading and tagline at the top, the email prompt pinned to the bottom */
+.intro {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: stretch;
+  min-width: 0;
+}
+
+.tagline {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-24);
+}
+
+.email {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-48);
+}
+
+.emailLink {
+  align-self: flex-start;
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-body);
+  color: var(--color-link);
+  transition: color 0.4s var(--ease-link);
+}
+
+.emailLink:hover,
+.emailLink:focus-visible {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+
+.form {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--space-12);
+  width: 480px;
+}
+
+/* Frosted fields: a faint grey fill over a blurred background */
+.field {
+  display: block;
+  border-radius: var(--radius-field);
+  background: var(--color-field);
+  backdrop-filter: blur(10px);
+  transition: background-color 0.3s var(--ease-link);
+}
+
+.field:focus-within {
+  background: rgb(112 112 112 / 0.1);
+}
+
+.input,
+.textarea {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-tech);
+  font-size: var(--text-field);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.06em;
+  color: var(--color-heading);
+  outline: none;
+}
+
+.input {
+  height: 56px;
+  padding: 0 var(--space-20);
+  line-height: 1.2;
+}
+
+.textarea {
+  height: 160px;
+  padding: var(--space-20);
+  line-height: 1.4;
+  resize: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-muted);
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.submit {
+  height: 56px;
+  padding: var(--space-12) var(--space-24);
+  border: 0;
+  border-radius: var(--radius-field);
+  background: var(--black);
+  font-family: var(--font-tech);
+  font-size: var(--text-field);
+  font-weight: var(--weight-semibold);
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-on-button);
+  cursor: pointer;
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--color-heading);
+  outline-offset: 2px;
+}
+
+/* Shown under the button after "sending"; takes no space until then. */
+.notice {
+  min-height: 0;
+  margin-top: calc(var(--space-12) * -1);
+  font-family: var(--font-tech);
+  font-size: var(--text-nav);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-body);
+}
+
+.notice:not(:empty) {
+  margin-top: 0;
+}
+
+@media (min-width: 1920px) {
+  .contact {
+    padding-block: 0 180px;
+  }
+
+  .form {
+    width: 560px;
+  }
+}
+
+/* Tablet and phone: intro above a full-width form */
+@media (max-width: 1199.98px) {
+  .contact {
+    padding-block: 0 var(--space-48);
+  }
+
+  .inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-48);
+  }
+
+  .form {
+    width: 100%;
+  }
+}
+
+/* Phone: the form keeps a 480px column, centred when there's room */
+@media (max-width: 809.98px) {
+  .form {
+    align-self: center;
+    max-width: 480px;
+  }
+}
