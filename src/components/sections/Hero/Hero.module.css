@@ -1,0 +1,16 @@
+.hero {
+  position: relative;
+  height: var(--hero-height);
+  overflow: hidden;
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(var(--white) 0%, rgb(255 255 255 / 0) 14%),
+    linear-gradient(rgb(255 255 255 / 0) 64%, var(--white) 100%),
+    radial-gradient(40% 55% at 62% 30%, #e4e4e4 0%, rgb(255 255 255 / 0) 100%),
+    radial-gradient(35% 40% at 38% 62%, #ececec 0%, rgb(255 255 255 / 0) 100%),
+    var(--white);
+}
