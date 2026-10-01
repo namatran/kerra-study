@@ -5,7 +5,7 @@ const maxLines = Number(process.argv[4] || 14);
 for (const [sec, samples] of Object.entries(data)) {
   if (only && !only.includes(sec)) continue;
   console.log('\n######', sec);
-  let lastScroll = null; const byEl = {}; const scrolls = [];
+  const byEl = {}; const scrolls = [];
   for (const [t, k, v] of samples) {
     if (k === 'SCROLL') { scrolls.push([t, JSON.parse(v).topInViewport]); continue; }
     (byEl[k] = byEl[k] || []).push([t, JSON.parse(v)]);

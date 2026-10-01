@@ -9,7 +9,6 @@ await scrollThrough(page);
 await page.evaluate(() => window.scrollTo(0, 0));
 await page.waitForTimeout(1200);
 const data = await page.evaluate(() => {
-  const px = (v) => v;
   const visible = (el) => { const r = el.getBoundingClientRect(); const cs = getComputedStyle(el); return r.width > 0 && r.height > 0 && cs.visibility !== 'hidden' && cs.display !== 'none'; };
   const rect = (el) => { const r = el.getBoundingClientRect(); return { x: Math.round(r.left), y: Math.round(r.top + scrollY), w: Math.round(r.width), h: Math.round(r.height) }; };
   const names = (el) => { const n = []; let e = el; while (e && n.length < 4) { const v = e.getAttribute && e.getAttribute('data-framer-name'); if (v) n.unshift(v); e = e.parentElement; } return n.join(' > '); };
@@ -63,9 +62,9 @@ const data = await page.evaluate(() => {
   const fontFaces = [], media = {}, tokens = {};
   for (const ss of document.styleSheets) {
     let rules; try { rules = ss.cssRules; } catch { continue; }
-    const visit = (rs, cond) => { for (const r of rs) {
+    const visit = (rs) => { for (const r of rs) {
       if (r instanceof CSSFontFaceRule) fontFaces.push(`${r.style.getPropertyValue('font-family')} w=${r.style.getPropertyValue('font-weight')} s=${r.style.getPropertyValue('font-style')} ${r.style.getPropertyValue('src').slice(0, 110)}`);
-      else if (r instanceof CSSMediaRule) { media[r.conditionText] = (media[r.conditionText] || 0) + r.cssRules.length; visit(r.cssRules, r.conditionText); }
+      else if (r instanceof CSSMediaRule) { media[r.conditionText] = (media[r.conditionText] || 0) + r.cssRules.length; visit(r.cssRules); }
       else if (r.style) { for (const p of r.style) if (p.startsWith('--token')) tokens[p] = r.style.getPropertyValue(p).trim(); }
     } };
     visit(rules);
