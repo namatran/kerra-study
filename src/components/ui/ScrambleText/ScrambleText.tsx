@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import styles from "./ScrambleText.module.css";
 
@@ -13,6 +13,7 @@ const TYPE_LAG_MS = 550; // "type" mode: characters start resolving after 550ms
 const glyph = () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
 const noise = (length: number) => Array.from({ length }, glyph).join("");
 const noiseLike = (text: string) => [...text].map((c) => (c === " " ? " " : glyph())).join("");
+const subscribeNothing = () => () => {};
 
 type Mode =
   /** Glyphs type in from the left, then resolve left to right (eyebrow labels). */
@@ -22,7 +23,7 @@ type Mode =
   /** A ragged run of glyphs resolves from the right end (hero spec readout). */
   | "resolve-right";
 
-function frame(text: string, mode: Mode, elapsed: number, charMs: number) {
+function frameAt(text: string, mode: Mode, elapsed: number, charMs: number) {
   const n = text.length;
   if (mode === "type") {
     const typed = Math.min(n, Math.floor(elapsed / TYPE_MS));
@@ -58,20 +59,18 @@ type Props = {
  */
 export function ScrambleText({ text, mode, playId, delay = 0, charMs = 55, align = "left", className }: Props) {
   const reducedMotion = usePrefersReducedMotion();
-  const [display, setDisplay] = useState(text);
-  const hiddenUntilPlayed = mode === "type" && playId === 0 && !reducedMotion;
+  // false while rendering on the server and hydrating, true afterwards
+  const isClient = useSyncExternalStore(subscribeNothing, () => true, () => false);
+  const [frame, setFrame] = useState<{ playId: number; value: string } | null>(null);
 
-  // Server HTML shows the final text; "type" labels then hide until they play.
-  useLayoutEffect(() => {
-    if (hiddenUntilPlayed) setDisplay("");
-  }, [hiddenUntilPlayed]);
+  let display = text;
+  if (isClient && !reducedMotion) {
+    if (frame && frame.playId === playId) display = frame.value;
+    else if (mode === "type") display = ""; // waiting to type in
+  }
 
   useEffect(() => {
-    if (reducedMotion) {
-      setDisplay(text);
-      return;
-    }
-    if (!playId) return;
+    if (!playId || reducedMotion) return;
     let raf = 0;
     let lastTick = -Infinity;
     const timer = window.setTimeout(() => {
@@ -79,8 +78,8 @@ export function ScrambleText({ text, mode, playId, delay = 0, charMs = 55, align
       const step = (now: number) => {
         if (now - lastTick >= TICK_MS) {
           lastTick = now;
-          const { value, done } = frame(text, mode, now - start, charMs);
-          setDisplay(value);
+          const { value, done } = frameAt(text, mode, now - start, charMs);
+          setFrame({ playId, value });
           if (done) return;
         }
         raf = requestAnimationFrame(step);
