@@ -1,0 +1,10 @@
+import { open } from './lib.mjs';
+import fs from 'node:fs';
+const w = Number(process.argv[2] || 1440), h = Number(process.argv[3] || 900);
+const { browser, page } = await open(w, h, { init: fs.readFileSync('sampler.js', 'utf8') });
+page.goto('https://www.kerra.earth/', { waitUntil: 'load', timeout: 90000 }).catch(() => {});
+await page.waitForTimeout(14000);
+const samples = await page.evaluate(() => window.__samples);
+fs.writeFileSync(`load-${w}.json`, JSON.stringify(samples));
+console.log('samples', samples.length);
+await browser.close();

@@ -42,3 +42,8 @@ next-env.d.ts
 
 # reference screenshots of the original site (third-party content, local only)
 docs/screenshots/
+
+# measurement outputs (contain snippets of the original site, local only)
+scripts/measure/*.json
+scripts/measure/*.png
+scripts/measure/film/
