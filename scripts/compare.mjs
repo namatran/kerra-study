@@ -2,6 +2,7 @@
 //
 //   npm run compare -- <section> [width]          e.g. npm run compare -- intro 1440
 //   npm run compare -- page 375                   whole page, side by side
+//   npm run compare -- sections 768               every section's position and height, as a table
 //
 // Needs the dev server running (npm run dev) and Google Chrome installed.
 // Writes docs/screenshots/compare/<section>-<width>.png (git-ignored: it contains the
@@ -33,12 +34,44 @@ const SECTIONS = {
 const [section = "page", widthArg = "1440"] = process.argv.slice(2);
 const width = Number(widthArg);
 const height = width >= 1200 ? 900 : width >= 810 ? 768 : width >= 768 ? 1024 : 812;
-if (section !== "page" && !SECTIONS[section]) {
-  console.error(`Unknown section "${section}". Use one of: page, ${Object.keys(SECTIONS).join(", ")}`);
+if (section !== "page" && section !== "sections" && !SECTIONS[section]) {
+  console.error(`Unknown section "${section}". Use one of: page, sections, ${Object.keys(SECTIONS).join(", ")}`);
   process.exit(1);
 }
 
 const browser = await chromium.launch({ channel: "chrome", headless: true });
+
+if (section === "sections") {
+  const boxes = async (url, side, settleMs) => {
+    const page = await browser.newPage({ viewport: { width, height }, isMobile: width < 768, hasTouch: width < 768 });
+    await page.goto(url, { waitUntil: "load", timeout: 90000 });
+    await page.waitForTimeout(settleMs);
+    const result = await page.evaluate(([sections, side]) => {
+      const visible = (el) => el.getBoundingClientRect().height > 0;
+      const out = {};
+      for (const [name, selectors] of Object.entries(sections)) {
+        if (name === "divider") continue;
+        const el = [...document.querySelectorAll(selectors[side])].find(visible);
+        if (el) out[name] = [Math.round(el.getBoundingClientRect().top + scrollY), Math.round(el.getBoundingClientRect().height)];
+      }
+      out.page = [0, document.documentElement.scrollHeight];
+      return out;
+    }, [SECTIONS, side]);
+    await page.close();
+    return result;
+  };
+  const mine = await boxes(MINE, 0, 3000);
+  const orig = await boxes(ORIGINAL, 1, 5500);
+  await browser.close();
+  console.log(`\nsection          mine y / height      original y / height   height diff   (${width}px)`);
+  for (const name of Object.keys(orig)) {
+    const [my, mh] = mine[name] ?? ["-", "-"];
+    const [oy, oh] = orig[name];
+    const diff = typeof mh === "number" ? mh - oh : "-";
+    console.log(`${name.padEnd(16)} ${String(my).padStart(6)} / ${String(mh).padEnd(10)} ${String(oy).padStart(6)} / ${String(oh).padEnd(10)} ${String(diff).padStart(6)}`);
+  }
+  process.exit(0);
+}
 
 async function capture(url, selector, settleMs) {
   const page = await browser.newPage({
