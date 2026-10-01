@@ -174,8 +174,12 @@
   }
 }
 
-/* Phone: the form keeps a 480px column, centred when there's room */
+/* Phone: no gap above the email link; the form keeps a 480px column, centred when there's room */
 @media (max-width: 809.98px) {
+  .email {
+    gap: 0;
+  }
+
   .form {
     align-self: center;
     max-width: 480px;

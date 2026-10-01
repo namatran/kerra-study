@@ -56,8 +56,10 @@ export function DotLattice({ className, label }: { className?: string; label: st
         for (let c = 0; c < cols; c++) {
           const x = x0 + c * spacing + (r % 2 ? spacing / 2 : 0);
           const y = y0 + r * rowStep;
-          // elliptical distance from the centre: grains are darkest in the middle
-          const d = Math.hypot((x - width / 2) / (width / 2), (y - height / 2) / (height / 2));
+          // elliptical distance from the centre: grains are darkest in the middle. The
+          // cluster's width follows the height, so wide, short boxes don't stretch it.
+          const rx = Math.min(width / 2, height * 0.72);
+          const d = Math.hypot((x - width / 2) / rx, (y - height / 2) / (height / 2));
           const weight = Math.max(0, Math.min(1, 1 - (d - 0.22) / 0.5));
           if (weight <= 0) continue;
           nodes.push({ x, y, hollow: (c * 7 + r * 13) % 11 === 0, weight });

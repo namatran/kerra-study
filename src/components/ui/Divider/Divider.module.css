@@ -3,6 +3,13 @@
   padding: var(--divider-space) var(--space-128);
 }
 
+/* On phones the original's divider is 192px in total, so the line eats into the space below. */
+@media (max-width: 809.98px) {
+  .divider {
+    padding-bottom: calc(var(--divider-space) - 1px);
+  }
+}
+
 .line {
   height: 1px;
   background: linear-gradient(90deg, var(--white) 0%, var(--color-hairline) 50%, var(--white) 100%);

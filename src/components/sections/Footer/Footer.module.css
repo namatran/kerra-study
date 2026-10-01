@@ -108,6 +108,11 @@
     flex: none;
   }
 
+  /* The original leaves 24px of space under the wordmark here. */
+  .brand {
+    min-height: 48px;
+  }
+
   .meta {
     align-items: center;
   }
