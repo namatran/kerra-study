@@ -10,12 +10,13 @@ An unofficial design study of kerra.earth, rebuilt with original placeholder con
 - **Measuring scripts** (Playwright, using your installed Chrome) are in `scripts/measure/`. Run them from that folder, for example `cd scripts/measure && node survey.mjs 1440 900`.
 - **Phase 2 so far:**
   - Fonts and design tokens are in `src/app/globals.css`, and all page text is in `src/data/content.ts` (fictional brand "Nacre"). `robots: noindex` is set.
-  - Built and checked against the original at 1440: **Nav**, **Intro** (with the partner row), and the section **Divider**. The hero is a grey gradient placeholder for now.
+  - Built and checked against the original at 1440: **Nav**, **Intro** (with the partner row), **Technology** (canvas dot lattice) and the section **Divider**. The hero is a grey gradient placeholder for now.
+  - **Markets** (the scroll-stepped wheel) is built from measured geometry but **not yet compared** with the original. Its measurements are in `scripts/measure/wheel.mjs`.
   - `npm run compare -- <section> [width]` screenshots one section of this build next to the original. Images go to `docs/screenshots/compare/` (git-ignored).
 
 ## Next (Phase 2: build)
 
-1. Build the remaining sections one at a time in `src/components/sections/`: Technology, Markets, Why, Sustainability, Contact, Footer, Preloader. Check each against the original at 1440 with `npm run compare`.
+1. Run `npm run compare -- markets` and fix any differences in the wheel. Then build the remaining sections one at a time in `src/components/sections/`: Why, Sustainability, Contact, Footer, Preloader. Check each against the original at 1440 with `npm run compare`.
 2. Once the whole page is built, check it at 768 and 375 and fix the differences.
 3. Add the footer line "Unofficial design study of kerra.earth. Not affiliated." and check `prefers-reduced-motion` everywhere.
 4. Build the hero last: the headline reveal, corner brackets and spec readout, then a Three.js glossy grey blob in place of the gradient. Show it and ask before adding film grain, blur or glitch boxes.
