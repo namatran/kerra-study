@@ -5,7 +5,10 @@
   pointer-events: none;
 }
 
-/* Wider than the section so it can drift sideways without showing an edge. */
+/*
+  Wider than the section so it can drift sideways without showing an edge.
+  --s scales the band spacing, --a1/--a2 set how dark the bands get.
+*/
 .bands {
   position: absolute;
   inset: 0 -240px;
@@ -14,35 +17,40 @@
     repeating-linear-gradient(
       90deg,
       rgb(0 0 0 / 0) 0,
-      rgb(0 0 0 / var(--a1)) 34px,
-      rgb(0 0 0 / 0) 70px,
-      rgb(0 0 0 / var(--a2)) 118px,
-      rgb(0 0 0 / 0) 150px,
-      rgb(0 0 0 / var(--a1)) 196px,
-      rgb(0 0 0 / 0) 240px
+      rgb(0 0 0 / var(--a1)) calc(34px * var(--s)),
+      rgb(0 0 0 / 0) calc(70px * var(--s)),
+      rgb(0 0 0 / var(--a2)) calc(118px * var(--s)),
+      rgb(0 0 0 / 0) calc(150px * var(--s)),
+      rgb(0 0 0 / var(--a1)) calc(196px * var(--s)),
+      rgb(0 0 0 / 0) calc(240px * var(--s))
     ),
     repeating-linear-gradient(
       90deg,
       rgb(0 0 0 / 0) 0,
-      rgb(0 0 0 / var(--a1)) 52px,
-      rgb(0 0 0 / 0) 96px,
-      rgb(0 0 0 / 0) 210px,
-      rgb(0 0 0 / var(--a2)) 260px,
-      rgb(0 0 0 / 0) 370px
+      rgb(0 0 0 / var(--a1)) calc(52px * var(--s)),
+      rgb(0 0 0 / 0) calc(96px * var(--s)),
+      rgb(0 0 0 / 0) calc(210px * var(--s)),
+      rgb(0 0 0 / var(--a2)) calc(260px * var(--s)),
+      rgb(0 0 0 / 0) calc(370px * var(--s))
     );
-  filter: blur(12px);
+  filter: blur(var(--blur));
   will-change: transform;
   animation: drift 36s ease-in-out infinite alternate;
 }
 
 .soft {
+  --s: 1;
   --a1: 0.05;
   --a2: 0.08;
+  --blur: 12px;
 }
 
+/* Contact: finer, crisper bands, like light through ribbed glass */
 .deep {
-  --a1: 0.09;
-  --a2: 0.14;
+  --s: 0.5;
+  --a1: 0.035;
+  --a2: 0.06;
+  --blur: 4px;
 }
 
 .fade {

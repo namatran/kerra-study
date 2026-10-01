@@ -1,3 +1,5 @@
+import { Contact } from "@/components/sections/Contact/Contact";
+import { Footer } from "@/components/sections/Footer/Footer";
 import { Hero } from "@/components/sections/Hero/Hero";
 import { Intro } from "@/components/sections/Intro/Intro";
 import { Markets } from "@/components/sections/Markets/Markets";
@@ -23,7 +25,9 @@ export default function Home() {
         <Divider />
         <Sustainability />
         <Divider />
+        <Contact />
       </main>
+      <Footer />
     </>
   );
 }
