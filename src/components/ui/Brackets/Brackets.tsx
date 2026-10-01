@@ -3,9 +3,9 @@ import styles from "./Brackets.module.css";
 const CORNERS = ["topLeft", "topRight", "bottomRight", "bottomLeft"] as const;
 
 type Props = {
-  /** How far outside the parent's box the corners sit, in px. */
-  outset: number;
-  /** "flicker" blinks once when `active` turns true; "appear" slides each corner in. */
+  /** How far outside the parent's box the corners sit, in px. Leave out to set --outset in CSS. */
+  outset?: number;
+  /** "flicker" blinks once when `active` turns true; "appear" springs each corner in on load. */
   motion?: "flicker" | "appear";
   active?: boolean;
 };
@@ -20,7 +20,7 @@ export function Brackets({ outset, motion, active = false }: Props) {
       className={styles.frame}
       data-motion={motion}
       data-active={active}
-      style={{ "--outset": `${outset}px` } as React.CSSProperties}
+      style={outset === undefined ? undefined : ({ "--outset": `${outset}px` } as React.CSSProperties)}
       aria-hidden="true"
     >
       {CORNERS.map((corner) => (

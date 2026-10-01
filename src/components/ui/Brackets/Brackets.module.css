@@ -1,36 +1,41 @@
 .frame {
   position: absolute;
-  inset: calc(var(--outset) * -1);
+  inset: calc(var(--outset, 0px) * -1);
   pointer-events: none;
   color: var(--color-ink);
 }
 
+/*
+  Each corner is the top-left shape turned by a quarter turn (--turn). Every transform
+  uses the same function list, so animations rotate instead of flipping.
+*/
 .corner {
   position: absolute;
+  transform: translateX(0) rotate(var(--turn));
 }
 
-/* Each corner is the top-left shape turned by a quarter turn. */
 .topLeft {
+  --turn: 0deg;
   top: 0;
   left: 0;
 }
 
 .topRight {
+  --turn: 90deg;
   top: 1px;
   right: 1px;
-  transform: rotate(90deg);
 }
 
 .bottomRight {
+  --turn: 180deg;
   right: 0;
   bottom: 0;
-  transform: rotate(180deg);
 }
 
 .bottomLeft {
+  --turn: 270deg;
   bottom: 1px;
   left: 1px;
-  transform: rotate(270deg);
 }
 
 /* Stat card: a quick blink once the card is fully on screen */
@@ -53,5 +58,34 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+/*
+  Hero: on load each corner slides in 20px from its side (spring, 0.5s delay, as measured).
+  The right-hand corners also turn into place from 0deg, like the original.
+*/
+.frame[data-motion="appear"] .corner {
+  animation: appear 0.45s var(--ease-spring) 0.5s both;
+}
+
+.frame[data-motion="appear"] .topLeft,
+.frame[data-motion="appear"] .bottomLeft {
+  --from: translateX(-20px) rotate(var(--turn));
+}
+
+.frame[data-motion="appear"] .topRight,
+.frame[data-motion="appear"] .bottomRight {
+  --from: translateX(20px) rotate(0deg);
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: var(--from);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotate(var(--turn));
   }
 }
