@@ -6,16 +6,19 @@ An unofficial design study of kerra.earth, rebuilt with original placeholder con
 
 - **Phase 1 (measuring the original):** [`docs/DESIGN-REFS.md`](docs/DESIGN-REFS.md) records its sections, type, colours, spacing, breakpoints, components, motion and the asset plan.
 - **Reference screenshots** of the original at 1440, 1024, 768 and 375 wide are in `docs/screenshots/original/`. They're kept out of git on purpose because they show third-party content.
-- **App scaffold:** Next.js 16, TypeScript and ESLint, using the App Router, a `src/` folder and CSS Modules (no Tailwind). The page is still the default starter page; no sections are built yet.
+- **App scaffold:** Next.js 16, TypeScript and ESLint, using the App Router, a `src/` folder and CSS Modules (no Tailwind).
 - **Measuring scripts** (Playwright, using your installed Chrome) are in `scripts/measure/`. Run them from that folder, for example `cd scripts/measure && node survey.mjs 1440 900`.
+- **Phase 2 so far:**
+  - Fonts and design tokens are in `src/app/globals.css`, and all page text is in `src/data/content.ts` (fictional brand "Nacre"). `robots: noindex` is set.
+  - Built and checked against the original at 1440: **Nav**, **Intro** (with the partner row), and the section **Divider**. The hero is a grey gradient placeholder for now.
+  - `npm run compare -- <section> [width]` screenshots one section of this build next to the original. Images go to `docs/screenshots/compare/` (git-ignored).
 
 ## Next (Phase 2: build)
 
-1. Load the fonts (Open Sans, Chakra Petch, and Young Serif for the placeholder wordmark), and put the colour, type and spacing tokens in `src/app/globals.css` as CSS variables.
-2. Write all page text in `src/data/content.ts`, using original copy for a fictional brand and none of the original's text.
-3. Build one folder per section in `src/components/sections/`, in this order: Nav, Intro, Technology, Markets, Why, Sustainability, Contact, Footer, Preloader. After each section, screenshot it next to the original at 1440, 768 and 375 and fix the differences.
-4. Add `robots: noindex`, the footer line "Unofficial design study of kerra.earth. Not affiliated.", and `prefers-reduced-motion` support.
-5. Build the hero last. Start with a soft grey gradient placeholder, then make a Three.js glossy grey blob. Show it and ask before adding film grain, blur or glitch boxes.
+1. Build the remaining sections one at a time in `src/components/sections/`: Technology, Markets, Why, Sustainability, Contact, Footer, Preloader. Check each against the original at 1440 with `npm run compare`.
+2. Once the whole page is built, check it at 768 and 375 and fix the differences.
+3. Add the footer line "Unofficial design study of kerra.earth. Not affiliated." and check `prefers-reduced-motion` everywhere.
+4. Build the hero last: the headline reveal, corner brackets and spec readout, then a Three.js glossy grey blob in place of the gradient. Show it and ask before adding film grain, blur or glitch boxes.
 
 ## Start the preview
 
@@ -24,10 +27,10 @@ npm install
 ```
 
 ```bash
-npm run dev -- --port 4317
+npm run dev
 ```
 
-Then open http://localhost:4317. Port 4317 was free when checked. If it's taken, use another number; `kerra-matty` uses 4330.
+Then open http://localhost:4317. The port is set in `package.json`; 4317 was free when checked. If it's taken, run `npx next dev --port 4318` (or any free number) instead. `kerra-matty` uses 4330.
 
 ---
 
