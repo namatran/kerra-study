@@ -97,6 +97,12 @@
   .card {
     flex: none;
     order: -1;
+    height: 258px;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .card {
     height: 281px;
   }
 }
