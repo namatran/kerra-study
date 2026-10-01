@@ -1,0 +1,206 @@
+/* Desktop: the wheel fills the left, the copy sits in a 394px column on the right. */
+.markets {
+  position: relative;
+  display: flex;
+  height: 860px;
+  padding-right: var(--space-128);
+  overflow: hidden;
+}
+
+/* Wheel geometry, measured from the original */
+.stage {
+  --cx: 196px; /* wheel centre */
+  --cy: 447px;
+  --radius: 287px; /* where labels start */
+  --pointer: 243px; /* pointer dot, from the centre */
+  --fade-left: 192px;
+
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow-x: visible;
+  overflow-y: clip;
+}
+
+.monogram {
+  position: absolute;
+  top: var(--cy);
+  left: calc(var(--cx) - 14px);
+  font-family: var(--font-serif);
+  font-size: 230px;
+  line-height: 1;
+  color: var(--neutral-200);
+  transform: translate(-50%, -50%);
+  user-select: none;
+}
+
+.wheel {
+  position: absolute;
+  top: var(--cy);
+  left: var(--cx);
+  width: 0;
+  height: 0;
+  transform: rotate(var(--rotation));
+  transition: transform 0.45s var(--ease-spring);
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: var(--text-wheel);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-wheel);
+  letter-spacing: var(--tracking-wheel);
+  color: var(--color-faint);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform-origin: 0 0;
+  transform: rotate(var(--angle)) translate(var(--radius), -50%);
+  transition:
+    transform 0.45s var(--ease-spring),
+    color 0.45s var(--ease-spring);
+}
+
+/* The selected label darkens and steps out 44px to make room for the pointer. */
+.label[data-selected="true"] {
+  color: var(--color-heading);
+  transform: rotate(var(--angle)) translate(calc(var(--radius) + 44px), -50%);
+}
+
+.pointer {
+  position: absolute;
+  top: calc(var(--cy) - 13px);
+  left: calc(var(--cx) + var(--pointer) - 13px);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-heading);
+}
+
+.fadeLeft,
+.fadeTop,
+.fadeBottom {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* The original stacks three copies of each fade to make it stronger. */
+.fadeLeft {
+  inset: 0 auto 0 0;
+  width: var(--fade-left);
+  background:
+    linear-gradient(90deg, var(--white) 0%, rgb(255 255 255 / 0) 77%),
+    linear-gradient(90deg, var(--white) 0%, rgb(255 255 255 / 0) 77%),
+    linear-gradient(90deg, var(--white) 0%, rgb(255 255 255 / 0) 77%);
+}
+
+.fadeTop {
+  inset: 0 0 auto;
+  height: 160px;
+  background: linear-gradient(var(--white) 0%, rgb(255 255 255 / 0) 66%);
+}
+
+.fadeBottom {
+  inset: auto 0 0;
+  height: 160px;
+  background:
+    linear-gradient(rgb(255 255 255 / 0) 46%, var(--white) 100%),
+    linear-gradient(rgb(255 255 255 / 0) 46%, var(--white) 100%),
+    linear-gradient(rgb(255 255 255 / 0) 46%, var(--white) 100%);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: center;
+  width: 394px;
+}
+
+/* Paragraphs are a blank line apart, as in the original. */
+.paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--text-body) * var(--leading-body));
+  margin-top: var(--space-48);
+}
+
+.cta {
+  align-self: flex-start;
+  margin-top: var(--space-24);
+}
+
+@media (min-width: 1920px) {
+  .stage {
+    --cx: 396px;
+    --cy: 427px;
+    --fade-left: 482px;
+  }
+
+  .content {
+    width: 699px;
+  }
+
+  .paragraphs {
+    max-width: 560px;
+  }
+}
+
+/* Tablet: heading on top, the wheel below it, no paragraphs or button */
+@media (max-width: 1199.98px) {
+  .markets {
+    flex-direction: column;
+    height: auto;
+    padding-right: 0;
+  }
+
+  .content {
+    order: -1;
+    width: auto;
+    padding: 0 var(--gutter);
+  }
+
+  .paragraphs,
+  .cta {
+    display: none;
+  }
+
+  .stage {
+    --cx: 210px;
+    --cy: 539px;
+
+    flex: none;
+    height: 803px;
+    margin-top: var(--space-48);
+    overflow: hidden;
+  }
+}
+
+/* Phone: the wheel's centre sits off the left edge, so only its right side shows */
+@media (max-width: 809.98px) {
+  .stage {
+    --cx: -139px;
+    --cy: 400px;
+    --fade-left: 132px;
+
+    height: 747px;
+    margin-top: 0;
+  }
+
+  .label {
+    font-size: clamp(25px, 2.4vw + 16px, 28px);
+  }
+
+  .fadeTop {
+    display: none;
+  }
+
+  .fadeBottom {
+    right: auto;
+    width: 390px;
+    height: 98px;
+  }
+}
