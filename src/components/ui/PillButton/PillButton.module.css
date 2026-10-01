@@ -1,0 +1,30 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 var(--space-16);
+  border-radius: var(--radius-pill);
+  background: var(--color-button);
+  color: var(--color-on-button);
+  font-family: var(--font-tech);
+  font-size: var(--pill-font-size, 12px);
+  font-weight: var(--weight-semibold);
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background-color 0.4s var(--ease-spring),
+    filter 0.4s var(--ease-spring);
+}
+
+.pill:hover {
+  background: var(--color-button-hover);
+  filter: brightness(1.1);
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--color-heading);
+  outline-offset: 2px;
+}

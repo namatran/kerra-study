@@ -1,0 +1,97 @@
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  height: var(--nav-height);
+  padding: 0 var(--nav-gutter);
+  background: linear-gradient(var(--white) 36.37%, rgb(255 255 255 / 0) 100%);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 40px;
+}
+
+.logo {
+  display: block;
+}
+
+.menu,
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-48);
+}
+
+.link {
+  position: relative;
+  display: block;
+  font-family: var(--font-tech);
+  font-size: var(--text-nav);
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+/* Hover: square brackets fade in and spring outward by 4px. */
+.bracket {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  transition:
+    opacity 0.2s var(--ease-out),
+    transform 0.35s var(--ease-spring-soft);
+}
+
+.left {
+  left: -14px;
+  transform: translateX(4px);
+}
+
+.right {
+  right: -14px;
+  transform: translateX(-4px);
+}
+
+.link:hover .bracket,
+.link:focus-visible .bracket {
+  opacity: 1;
+  transform: none;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+/* Tablet */
+@media (max-width: 1199.98px) {
+  .menu,
+  .links {
+    gap: var(--space-32);
+  }
+}
+
+/* Phone: wordmark and a smaller pill only */
+@media (max-width: 809.98px) {
+  .nav {
+    align-items: flex-start;
+    height: 100px;
+    padding-top: var(--space-24);
+    --pill-font-size: 10px;
+  }
+
+  .inner {
+    height: 64px;
+  }
+
+  .links {
+    display: none;
+  }
+}
