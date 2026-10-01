@@ -1,40 +1,175 @@
+/*
+  Design tokens for the study. Every value was measured from the original,
+  see docs/DESIGN-REFS.md. Breakpoints follow the original's Framer setup:
+  desktop 1200–1919, large desktop 1920+, tablet 810–1199, phone 809 and below.
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Color: neutral scale */
+  --white: #ffffff;
+  --black: #000000;
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  --neutral-950: #0a0a0a;
+  --grey-666: #666666;
+  --grey-c4: #c4c4c4;
+
+  /* Color: roles */
+  --color-bg: var(--white);
+  --color-ink: var(--black);
+  --color-heading: var(--neutral-950);
+  --color-statement: var(--neutral-900);
+  --color-lead: var(--neutral-600);
+  --color-body: var(--neutral-500);
+  --color-muted: var(--neutral-400);
+  --color-faint: var(--neutral-300);
+  --color-hairline: var(--neutral-200);
+  --color-footnote: var(--grey-666);
+  --color-shimmer: var(--grey-c4);
+  --color-button: var(--neutral-800);
+  --color-button-hover: var(--neutral-900);
+  --color-on-button: var(--neutral-50);
+  --color-link: var(--neutral-800);
+  --color-link-hover: var(--neutral-950);
+  --color-field: rgba(112, 112, 112, 0.05);
+
+  /* Fonts (the --font-* families come from next/font in layout.tsx) */
+  --font-sans: var(--font-open-sans), "Open Sans", Arial, sans-serif;
+  --font-tech: var(--font-chakra-petch), "Chakra Petch", Arial, sans-serif;
+  --font-serif: var(--font-young-serif), "Young Serif", "Times New Roman", serif;
+
+  /* Type scale: desktop values, smaller screens override them below */
+  --text-display: 80px;
+  --leading-display: 1.1;
+  --tracking-display: -0.06em;
+  --text-h2: 44px;
+  --text-h2-long: 44px; /* intro statement and the two longer headings */
+  --leading-h2: 1.2;
+  --tracking-h2: -0.03em;
+  --text-lead: 24px;
+  --leading-lead: 1.3;
+  --text-body: 24px;
+  --leading-body: 1.4;
+  --text-wheel: 28px;
+  --leading-wheel: 1.5;
+  --tracking-wheel: -0.01em;
+  --text-stat: 128px;
+  --text-label: 16px;
+  --text-field: 14px;
+  --text-nav: 12px;
+  --text-readout: 12px;
+  --text-copyright: 13px;
+  --leading-copyright: 1.6;
+  --text-legal: 11px;
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* Spacing */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-96: 96px;
+  --space-128: 128px;
+  --space-160: 160px;
+  --space-240: 240px;
+
+  /* Layout */
+  --gutter: 128px;
+  --nav-gutter: 48px;
+  --content-max: 1440px;
+  --nav-height: 88px;
+  --hero-height: 100vh;
+  --divider-space: 160px;
+  --radius-pill: 12px;
+  --radius-field: 16px;
+
+  /* Motion */
+  --ease-in-out: cubic-bezier(0.45, 0.03, 0.52, 0.96);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-link: cubic-bezier(0.44, 0, 0.56, 1);
+  /* Damped springs drawn as linear() curves: bounce 0.2 overshoots ~1.5%, bounce 0.3 ~4.6% */
+  --ease-spring: linear(0 0%, 0.0515 4.2%, 0.1701 8.3%, 0.3158 12.5%, 0.463 16.7%, 0.5973 20.8%, 0.7116 25%, 0.8037 29.2%, 0.8746 33.3%, 0.9267 37.5%, 0.9632 41.7%, 0.9875 45.8%, 1.0024 50%, 1.0107 54.2%, 1.0144 58.3%, 1.0151 62.5%, 1.0141 66.7%, 1.0122 70.8%, 1.01 75%, 1.0078 79.2%, 1.0058 83.3%, 1.0041 87.5%, 1.0028 91.7%, 1.0018 95.8%, 1 100%);
+  --ease-spring-soft: linear(0 0%, 0.0747 4.2%, 0.2415 8.3%, 0.4362 12.5%, 0.6196 16.7%, 0.7721 20.8%, 0.8867 25%, 0.9651 29.2%, 1.0128 33.3%, 1.0373 37.5%, 1.0457 41.7%, 1.0441 45.8%, 1.0372 50%, 1.0284 54.2%, 1.0197 58.3%, 1.0122 62.5%, 1.0065 66.7%, 1.0024 70.8%, 0.9999 75%, 0.9985 79.2%, 0.9979 83.3%, 0.9979 87.5%, 0.9982 91.7%, 0.9986 95.8%, 1 100%);
 }
 
-@media (prefers-color-scheme: dark) {
+/* Tablet: 810–1199 */
+@media (max-width: 1199.98px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --gutter: 48px;
+    --hero-height: 90vh;
+    --text-display: 64px;
+    --divider-space: 96px;
+    --text-copyright: 16px;
+    --leading-copyright: 1.4;
+    --text-legal: 12px;
   }
 }
 
+/* Phone: 809 and below */
+@media (max-width: 809.98px) {
+  :root {
+    --gutter: 24px;
+    --nav-gutter: 24px;
+    --text-display: 48px;
+    --text-h2-long: 32px;
+    --text-lead: 20px;
+    --leading-lead: 1.4;
+    --color-lead: var(--neutral-700);
+  }
+}
+
+/* Base */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
+h1,
+h2,
+h3,
+h4,
+p,
+figure {
   margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 a {
@@ -42,8 +177,50 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+}
+
+/* Shared helpers */
+
+.container {
+  width: 100%;
+  max-width: calc(var(--content-max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Respect reduced motion: animations jump to their end state, transitions are instant */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
   }
 }
