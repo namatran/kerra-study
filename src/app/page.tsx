@@ -1,6 +1,7 @@
 import { Hero } from "@/components/sections/Hero/Hero";
 import { Intro } from "@/components/sections/Intro/Intro";
 import { Nav } from "@/components/sections/Nav/Nav";
+import { Technology } from "@/components/sections/Technology/Technology";
 import { Divider } from "@/components/ui/Divider/Divider";
 
 export default function Home() {
@@ -10,6 +11,8 @@ export default function Home() {
       <main>
         <Hero />
         <Intro />
+        <Divider />
+        <Technology />
         <Divider />
       </main>
     </>

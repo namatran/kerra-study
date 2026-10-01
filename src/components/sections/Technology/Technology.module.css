@@ -1,0 +1,94 @@
+.technology {
+  position: relative;
+}
+
+/* Copy on the left, the visual fills the rest and matches the copy's height. */
+.inner {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-48);
+}
+
+.copy {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  width: 560px;
+}
+
+.heading {
+  margin-top: var(--space-24);
+}
+
+.paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  max-width: 540px;
+  margin-top: var(--space-48);
+}
+
+.visual {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 9999px;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-tech);
+}
+
+.fade {
+  position: absolute;
+  inset: -2px;
+  pointer-events: none;
+  background: radial-gradient(49% 50% at 50% 50%, rgb(255 255 255 / 0) 34.19%, var(--white) 100%);
+}
+
+@media (min-width: 1920px) {
+  .technology {
+    padding-block: var(--space-96);
+  }
+
+  .inner {
+    align-items: center;
+  }
+
+  .visual {
+    height: 560px;
+  }
+}
+
+/* Tablet: the visual moves above the copy */
+@media (max-width: 1199.98px) {
+  .inner {
+    flex-direction: column;
+  }
+
+  .visual {
+    flex: none;
+    order: -1;
+    height: 480px;
+  }
+
+  .copy {
+    width: 100%;
+    max-width: 560px;
+  }
+}
+
+/* Phone: shorter visual, copy column centred when there's room */
+@media (max-width: 809.98px) {
+  .visual {
+    height: 320px;
+  }
+
+  .copy {
+    align-self: center;
+  }
+}
