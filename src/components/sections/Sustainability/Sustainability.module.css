@@ -1,0 +1,101 @@
+/* Desktop: the image on the left, copy sitting at the bottom of the right column */
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-48);
+}
+
+.media {
+  position: relative;
+  flex: none;
+  width: 592px;
+  height: 441px;
+  overflow: hidden;
+}
+
+/* Placeholder visual: a pearly disc built from concentric growth rings */
+.art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(60% 60% at 50% 50%, #fbfbfb 0%, var(--white) 100%);
+}
+
+.pearl {
+  width: min(62%, 300px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 36% 32%, rgb(255 255 255 / 0.95) 0%, rgb(255 255 255 / 0) 34%),
+    repeating-radial-gradient(circle at 50% 50%, #f6f6f6 0 7px, #e6e6e6 8px 9px, #f3f3f3 10px 16px),
+    conic-gradient(from 210deg, #efedf2, #e7eef0, #f1eee8, #eaeef0, #efedf2);
+  background-blend-mode: normal, multiply, normal;
+  box-shadow:
+    0 40px 60px -36px rgb(0 0 0 / 0.28),
+    inset 0 0 0 1px rgb(0 0 0 / 0.04);
+}
+
+.reveal {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-48);
+  min-width: 0;
+}
+
+.heading {
+  margin-top: var(--space-24);
+}
+
+.paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  max-width: 440px;
+}
+
+@media (min-width: 1920px) {
+  .media {
+    width: 835px;
+    height: 776px;
+  }
+}
+
+/* Tablet: image on top, copy below */
+@media (max-width: 1199.98px) {
+  .inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .media {
+    width: 100%;
+    height: 430px;
+  }
+}
+
+/* Phone: shorter image, no gap, copy column centred when there's room */
+@media (max-width: 809.98px) {
+  .inner {
+    gap: 0;
+  }
+
+  .media {
+    height: 320px;
+  }
+
+  .content {
+    align-self: center;
+    width: 100%;
+    max-width: 560px;
+  }
+}
