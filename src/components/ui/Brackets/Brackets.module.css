@@ -1,0 +1,57 @@
+.frame {
+  position: absolute;
+  inset: calc(var(--outset) * -1);
+  pointer-events: none;
+  color: var(--color-ink);
+}
+
+.corner {
+  position: absolute;
+}
+
+/* Each corner is the top-left shape turned by a quarter turn. */
+.topLeft {
+  top: 0;
+  left: 0;
+}
+
+.topRight {
+  top: 1px;
+  right: 1px;
+  transform: rotate(90deg);
+}
+
+.bottomRight {
+  right: 0;
+  bottom: 0;
+  transform: rotate(180deg);
+}
+
+.bottomLeft {
+  bottom: 1px;
+  left: 1px;
+  transform: rotate(270deg);
+}
+
+/* Stat card: a quick blink once the card is fully on screen */
+.frame[data-motion="flicker"][data-active="true"] .corner {
+  animation: flicker 0.2s linear;
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 1;
+  }
+  1% {
+    opacity: 0.1;
+  }
+  35% {
+    opacity: 0.22;
+  }
+  70% {
+    opacity: 0.56;
+  }
+  100% {
+    opacity: 1;
+  }
+}
