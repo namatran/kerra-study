@@ -3,6 +3,7 @@ import { Intro } from "@/components/sections/Intro/Intro";
 import { Markets } from "@/components/sections/Markets/Markets";
 import { Nav } from "@/components/sections/Nav/Nav";
 import { Technology } from "@/components/sections/Technology/Technology";
+import { Why } from "@/components/sections/Why/Why";
 import { Divider } from "@/components/ui/Divider/Divider";
 
 export default function Home() {
@@ -16,6 +17,8 @@ export default function Home() {
         <Technology />
         <Divider />
         <Markets />
+        <Divider />
+        <Why />
         <Divider />
       </main>
     </>
