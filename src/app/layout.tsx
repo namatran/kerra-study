@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Chakra_Petch, Open_Sans, Young_Serif } from "next/font/google";
+import { site } from "@/data/content";
 import "./globals.css";
 
 // Open Sans is a variable font, so every weight from 300 to 800 comes in one file.
@@ -22,8 +23,8 @@ const youngSerif = Young_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Design study",
-  description: "An unofficial design study. Not affiliated.",
+  title: site.title,
+  description: site.description,
   robots: { index: false, follow: false },
 };
 
