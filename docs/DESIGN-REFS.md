@@ -198,3 +198,21 @@ anything for `prefers-reduced-motion`.
 | Social (LinkedIn) icon | Third-party logo | Generic placeholder icon (no third-party logo) |
 | Favicon | Logo | Original placeholder mark |
 | All copy | Text | Original placeholder copy for a fictional brand, kept in `src/data/content.ts`, with similar line lengths so the layout breaks in the same places |
+
+---
+
+## 9. Found while building
+
+Measured again while matching the build section by section:
+
+- **Dividers** keep 128px side padding at every width. On phones the whole block is 192px (96 above, 95 below the 1px line).
+- **Partner logos:** the fourth sits in a 78px-tall box, which shows once the logos stack on phones.
+- **Footer on phones:** the wordmark block is 48px tall (24px of space under the logo).
+- **Contact on phones:** there's no gap between the email prompt and the email link (4px on desktop).
+- **Stat card:** 258px tall on tablet and 281px on phones.
+- **Technology:** at 1200–1919 the section's height comes from the copy column (402px) and the graphic stretches to match. At 1920 and up the graphic is 560px tall.
+- **Markets wheel**, measured at each breakpoint:
+  - Labels start 287px from the centre, and the selected label steps out a further 44px.
+  - The pointer dot is 26px, centred 243px right of the wheel's centre.
+  - Wheel centre: (196, 447) at 1200–1919, (396, 427) at 1920+, (210, 640) on tablet, and (−139, 451) on phones, measured from the section's top-left.
+  - Label size is 28px, or 25px at 375.
