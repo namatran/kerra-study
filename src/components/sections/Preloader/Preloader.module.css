@@ -1,0 +1,59 @@
+/*
+  Timeline, as measured: a short pause, the fill wipes left to right over 2s
+  (ease-in-out), then the overlay disappears at once with no fade.
+*/
+.preloader {
+  --fill-delay: 0.3s;
+  --fill-duration: 2s;
+
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--white);
+  animation: hide 1ms linear calc(var(--fill-delay) + var(--fill-duration)) forwards;
+}
+
+.mark {
+  position: relative;
+  --wordmark-size: 33px;
+}
+
+/* The faint copy underneath */
+.ghost {
+  opacity: 0.3;
+}
+
+/* The solid copy on top, revealed from the left */
+.fill {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 100% 0 0);
+  animation: fill var(--fill-duration) var(--ease-in-out) var(--fill-delay) forwards;
+}
+
+@keyframes fill {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Hidden at both ends, so nothing has to interpolate; "forwards" keeps it hidden. */
+@keyframes hide {
+  from,
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Backup once the page reports it's ready */
+:global(html[data-ready="true"]) .preloader {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader {
+    display: none;
+  }
+}
